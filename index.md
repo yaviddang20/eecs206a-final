@@ -4,8 +4,6 @@ title: EECS 206A Final Project
 permalink: /
 ---
 
-<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
 <div class="hero">
   <div class="hero-content">
     <div class="hero-badge">EECS 206A Final Project — Group 48</div>

@@ -1,0 +1,24 @@
+# Site settings
+title: EECS 206A Final Project
+description: Hand–Eye Calibrated 3D Gaussian Splatting with a Robot Manipulator
+baseurl: ""
+url: ""
+
+# Build settings
+theme: minima
+
+plugins:
+  - jekyll-feed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .gitignore
+  - README.md
+  - tools/
