@@ -1,0 +1,24 @@
+{
+  "name": "eecs206a-final",
+  "version": "1.0.0",
+  "description": "This is a GitHub Pages website for showcasing the EECS 206A Robotics final project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaviddang20/eecs206a-final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yaviddang20/eecs206a-final/issues"
+  },
+  "homepage": "https://github.com/yaviddang20/eecs206a-final#readme",
+  "dependencies": {
+    "spz-js": "^1.2.5"
+  }
+}
