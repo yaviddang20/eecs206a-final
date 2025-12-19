@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Spark Viewer</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #111;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.178.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.178.0/examples/jsm/",
+      "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/0.1.10/spark.module.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { SplatMesh } from "@sparkjsdev/spark";
+
+/* ---------------- Scene ---------------- */
+const scene = new THREE.Scene();
+
+/* ---------------- Camera ---------------- */
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.set(-1, 0.6, 2);
+
+/* ---------------- Renderer ---------------- */
+const renderer = new THREE.WebGLRenderer({
+  antialias: false,          // IMPORTANT: disable MSAA
+  powerPreference: "high-performance"
+});
+
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+
+// Cap pixel ratio (HUGE win)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+document.body.appendChild(renderer.domElement);
+
+/* ---------------- Controls ---------------- */
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = true;
+controls.minDistance = 0.5;
+controls.maxDistance = 10;
+controls.target.set(0, 0.3, -0.5);
+
+/* ---------------- Load splat ---------------- */
+const params = new URLSearchParams(window.location.search);
+const splatURL = params.get("splat") || "../models/point_cloud.spz";
+
+console.log("splatURL", splatURL);
+
+const splat = new SplatMesh({
+  url: splatURL,
+
+  // Spark performance hints
+  maxScreenSpaceError: 2.0,     // ↓ quality slightly, ↑ speed massively
+  sphericalHarmonicsDegree: 0   // disable SH if you don’t need fancy lighting
+  
+});
+
+splat.rotation.x = Math.PI; 
+
+scene.add(splat);
+
+// splat.onReady?.(() => {
+   //  fitCameraToObject(camera, splat, controls);
+  // });
+
+function fitCameraToObject(camera, object, controls, offset = 1.25) {
+    const box = new THREE.Box3().setFromObject(object);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+  
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180);
+    let distance = maxDim / (2 * Math.tan(fov / 2));
+  
+    distance *= offset;
+  
+    camera.position.copy(center);
+    camera.position.z += distance;
+  
+    camera.near = distance / 100;
+    camera.far  = distance * 100;
+    camera.updateProjectionMatrix();
+  
+    controls.target.copy(center);
+    controls.update();
+  }
+
+/* ---------------- Resize (iframe-safe) ---------------- */
+function resize() {
+  const w = document.body.clientWidth;
+  const h = document.body.clientHeight;
+
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+}
+window.addEventListener("resize", resize);
+resize();
+
+/* ---------------- Render loop ---------------- */
+renderer.setAnimationLoop(() => {
+  controls.update();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
