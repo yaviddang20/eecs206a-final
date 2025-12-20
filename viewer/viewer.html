@@ -42,7 +42,7 @@ camera.position.set(-1, 0.6, 2);
 
 /* ---------------- Renderer ---------------- */
 const renderer = new THREE.WebGLRenderer({
-  antialias: false,          // IMPORTANT: disable MSAA
+  antialias: false,
   powerPreference: "high-performance"
 });
 
@@ -50,7 +50,6 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 
-// Cap pixel ratio (HUGE win)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
 document.body.appendChild(renderer.domElement);
@@ -62,30 +61,23 @@ controls.dampingFactor = 0.08;
 controls.enablePan = true;
 controls.minDistance = 0.5;
 controls.maxDistance = 10;
-controls.target.set(0, 0.3, -0.5);
+controls.target.set(0.8, 0.1, -0.5);
 
 /* ---------------- Load splat ---------------- */
 const params = new URLSearchParams(window.location.search);
 const splatURL = params.get("splat") || "../models/point_cloud.spz";
 
-console.log("splatURL", splatURL);
-
 const splat = new SplatMesh({
   url: splatURL,
 
-  // Spark performance hints
-  maxScreenSpaceError: 2.0,     // ↓ quality slightly, ↑ speed massively
-  sphericalHarmonicsDegree: 0   // disable SH if you don’t need fancy lighting
+  maxScreenSpaceError: 2.0,
+  sphericalHarmonicsDegree: 0
   
 });
 
 splat.rotation.x = Math.PI; 
 
 scene.add(splat);
-
-// splat.onReady?.(() => {
-   //  fitCameraToObject(camera, splat, controls);
-  // });
 
 function fitCameraToObject(camera, object, controls, offset = 1.25) {
     const box = new THREE.Box3().setFromObject(object);
@@ -109,7 +101,7 @@ function fitCameraToObject(camera, object, controls, offset = 1.25) {
     controls.update();
   }
 
-/* ---------------- Resize (iframe-safe) ---------------- */
+/* ---------------- Resize ---------------- */
 function resize() {
   const w = document.body.clientWidth;
   const h = document.body.clientHeight;

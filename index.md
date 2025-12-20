@@ -163,7 +163,6 @@ permalink: /
       }
     </style>
     <script>
-      // Load YouTube IFrame API
       var tag = document.createElement('script');
       tag.src = "https://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -178,7 +177,6 @@ permalink: /
           var playerId = 'video' + (index + 1);
           var container = document.getElementById(playerId);
           if (container) {
-            // Remove existing iframe and let API create it
             container.innerHTML = '';
             players[playerId] = new YT.Player(playerId, {
               videoId: videoId,
@@ -197,23 +195,18 @@ permalink: /
               events: {
                 'onReady': function(event) {
                   event.target.playVideo();
-                  // Start checking for near-end to create seamless loop
                   var player = event.target;
                   checkIntervals[playerId] = setInterval(function() {
                     try {
                       var currentTime = player.getCurrentTime();
                       var duration = player.getDuration();
-                      // If within 0.3 seconds of end, seek to start immediately
                       if (duration && currentTime && (duration - currentTime) < 0.3) {
                         player.seekTo(0, true);
                       }
-                    } catch(e) {
-                      // Ignore errors
-                    }
-                  }, 50); // Check every 50ms for smooth looping
+                    } catch(e) {}
+                  }, 50);
                 },
                 'onStateChange': function(event) {
-                  // When video ends, restart immediately
                   if (event.data === YT.PlayerState.ENDED) {
                     event.target.seekTo(0);
                     event.target.playVideo();
@@ -254,7 +247,7 @@ permalink: /
 
     <h3>3D Reconstruction Quality</h3>
     <p>
-      The system produces 3D reconstructions with consistent geometry given a sparse collection of only 10 images. The 3DGS point cloud output is depicted below. More images (either by increasing the number of waypoints or varying height of the robot arm / camera) could increase the quality of the reconstruction at the cost of increased speed. For online real-time reconstruction, the system achieves sub-20 second training times on an A100 GPU, making it suitable for rapid scene understanding and grasp planning applications.
+      The system produces 3D reconstructions with consistent geometry given a sparse collection of only 10 images. The 3DGS point cloud output is depicted below. There are some clear issues with catching objects that are farther away from the center and closer to the periphery of the circular trajectory such as the green cup. Additionally some artifacting is visible and points outside of the scene should be filtered out. More images (either by increasing the number of waypoints or varying height of the robot arm / camera) could increase the quality of the reconstruction at the cost of increased speed. For online real-time reconstruction, the system achieves sub-20 second training times on an A100 GPU, making it suitable for rapid scene understanding and grasp planning applications.
     </p>
 
     <div style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 0 20px;">

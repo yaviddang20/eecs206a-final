@@ -3,7 +3,6 @@ const path = require("path");
 const { Readable } = require("stream");
 
 async function main() {
-  // Dynamically import ESM-only spz-js
   const { loadPly, serializeSpz } = await import("spz-js");
 
   const inputPly = process.argv[2];
@@ -15,7 +14,6 @@ async function main() {
     process.exit(1);
   }
 
-  // Node stream → Web stream (THIS is the key)
   const nodeStream = fs.createReadStream(inputPly);
   const webStream = Readable.toWeb(nodeStream);
 
