@@ -94,6 +94,15 @@ permalink: /
      For the scene, I used a wallet & keychain, small wood cube, green plastic cup, and a 5 cm ArUco tag. The scene was placed on top of a tabletop placed below the end-effector of the arm. The scene can consist of any object as long as the object is not too tall or too large. For robustness, I add an ArUco tag to indicate the center of the scene but the tag is not necessary if the center of the scene is directly under the end effector's default position.
     </p>
 
+    <figure style="max-width: 500px; margin: 2rem auto;">
+      <div style="width: 100%; max-width: 500px; height: 400px; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; background: #f9fafb;">
+        <img src="{{ '/assets/images/mount.png' | relative_url }}" alt="Camera mount design" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;">
+      </div>
+      <figcaption style="text-align: center; margin-top: 0.75rem; font-style: italic; color: #6b7280; font-size: 0.9rem;">
+        Custom 3D-printed camera mount design with M4 through-holes for attachment to the wrist end-effector and half inch through-hole to mount the RealSense camera.
+      </figcaption>
+    </figure>
+
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; max-width: 800px;">
       <figure style="margin: 0;">
         <div style="width: 100%; max-width: 350px; height: 300px; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; background: #f9fafb;">
@@ -284,7 +293,7 @@ permalink: /
     <div class="team-members">
       <div class="team-member">
         <h3>David Yang</h3>
-        <p>Graduate student at UC Berkeley in computational biology with an interest in robotics.</p>
+        <p>Graduate student at UC Berkeley in computational biology with research experience in deep learning for protein design and an interest in robotics.</p>
       </div>
     </div>
   </section>
@@ -294,10 +303,9 @@ permalink: /
   <section class="links">
     <h2>Resources</h2>
     <div class="link-buttons">
-      <a href="https://github.com/yaviddang20" class="btn btn-primary" target="_blank">
+      <a href="https://github.com/yaviddang2/eecs206a-final" class="btn btn-primary" target="_blank">
         GitHub Repository
       </a>
-      <a href="/" class="btn btn-secondary">Back to Home</a>
     </div>
   </section>
 
