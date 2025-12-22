@@ -296,7 +296,7 @@ permalink: /
   <section class="links">
     <h2>Resources</h2>
     <div class="link-buttons">
-      <a href="https://github.com/yaviddang2/eecs206a-final" class="btn btn-primary" target="_blank">
+      <a href="https://github.com/yaviddang20/eecs206a-final" class="btn btn-primary" target="_blank">
         GitHub Repository
       </a>
     </div>
